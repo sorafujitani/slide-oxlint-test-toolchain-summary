@@ -98,13 +98,15 @@ background: linear-gradient(135deg,
 ### フォントファミリー
 
 ```css
-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP',
-             'Helvetica Neue', Arial, sans-serif;
+font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Sans',
+             'Yu Gothic', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 ```
 
 **コード用フォント**:
 ```css
-font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+font-family: ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas,
+             'Liberation Mono', monospace;
+font-variant-ligatures: none;
 ```
 
 ### フォントサイズ

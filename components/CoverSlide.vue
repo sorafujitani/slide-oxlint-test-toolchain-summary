@@ -55,6 +55,21 @@ const props = withDefaults(defineProps<Props>(), {
 .slidev-layout:has(.cover-slide) {
   padding: 0 !important;
 }
+
+.slidev-page:has(.cover-slide) {
+  border-radius: 0 !important;
+  background:
+    radial-gradient(ellipse 132% 72% at 50% -14%,
+      rgb(118 220 232 / 0.9) 0%,
+      rgb(178 234 241 / 0.68) 48%,
+      transparent 78%
+    ),
+    linear-gradient(180deg,
+      rgb(224 246 250) 0%,
+      var(--color-bg) 58%,
+      var(--color-bg) 100%
+    ) !important;
+}
 </style>
 
 <style scoped>
@@ -63,16 +78,44 @@ const props = withDefaults(defineProps<Props>(), {
   inset: 0;
   display: grid;
   place-items: center;
+  background:
+    radial-gradient(ellipse 132% 72% at 50% -14%,
+      rgb(118 220 232 / 0.9) 0%,
+      rgb(178 234 241 / 0.68) 48%,
+      transparent 78%
+    ),
+    linear-gradient(180deg,
+      rgb(224 246 250) 0%,
+      var(--color-bg) 58%,
+      var(--color-bg) 100%
+    );
 }
 
 .cover-content {
+  width: 100%;
+  max-width: 960px;
   text-align: center;
+  transform: translateX(-1.25rem);
 }
 
 .cover-title {
+  width: 100%;
   margin-bottom: 0;
-  font-size: clamp(1.8rem, 4vw, 3rem) !important;
+  font-size: clamp(1.4rem, 2.7vw, 2rem) !important;
   line-height: 1.1;
+  text-align: center;
+}
+
+.cover-title.gradient-heading {
+  background: linear-gradient(135deg,
+    oklch(0.42 0.22 255) 0%,
+    oklch(0.60 0.22 228) 46%,
+    oklch(0.76 0.18 205) 100%
+  );
+  background-size: 180% 180%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .cover-subtitle {
@@ -81,8 +124,8 @@ const props = withDefaults(defineProps<Props>(), {
 }
 
 .cover-title {
-  font-weight: 900;
-  letter-spacing: -0.03em;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .cover-meta {
@@ -90,6 +133,7 @@ const props = withDefaults(defineProps<Props>(), {
   font-weight: 700;
   text-align: center;
   color: var(--color-text-muted);
+  width: 100%;
 }
 
 .cover-social {

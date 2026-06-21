@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;600;700;800&display=swap');
 
 /* ===================================
    Slidev共通テンプレート - スタイル定義
@@ -9,16 +9,21 @@
   /* Primary colors - Purple to Blue gradient */
   --color-primary: oklch(0.6 0.2 270);
   --color-secondary: oklch(0.65 0.2 240);
-  --color-accent: oklch(0.7 0.18 210);
+  --color-accent: oklch(0.52 0.16 215);
 
   /* Text colors */
-  --color-text: oklch(0.2 0.02 270);
-  --color-text-muted: oklch(0.5 0.05 270);
+  --color-text: oklch(0.15 0.02 270);
+  --color-text-muted: oklch(0.42 0.04 270);
 
   /* Background */
   --color-bg: oklch(0.97 0.003 260);
   --color-bg-soft: oklch(0.97 0.003 260);
   --slide-background: var(--color-bg);
+
+  /* Typography scale */
+  --slidev-code-font-size: 16px;
+  --slide-body-font-size: clamp(1.05rem, 2vw, 1.22rem);
+  --slide-code-font-size: clamp(0.95rem, 1.9vw, 1.2rem);
 }
 
 .dark {
@@ -32,8 +37,8 @@
 
 /* フォント設定 */
 :root {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP',
-               'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Sans',
+               'Yu Gothic', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   font-feature-settings: "liga", "calt";
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -61,7 +66,17 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 7% 3%; /* 参考スライドの標準: 垂直7%, 水平3% */
+  padding: 6% 9%;
+  font-weight: 600;
+  overflow: hidden;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+/* layout: center 用 — 中央配置を維持 */
+.slidev-layout.center,
+.slidev-layout[class*='text-center'] {
+  justify-content: center;
 }
 
 /* 見出しスタイル */
@@ -70,8 +85,22 @@ h1 {
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: -0.02em;
-  margin-bottom: 1rem;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
   color: var(--color-text);
+  flex-shrink: 0;
+}
+
+/* h1 を使わないスライド — 先頭段落をリード文として少し強調 */
+.slidev-layout:not(.center) > p:first-child {
+  font-size: clamp(1.1rem, 2.15vw, 1.3rem);
+  font-weight: 700;
+  margin-bottom: 0.65rem;
+}
+
+.slidev-layout:not(.center) > p:first-child + ul,
+.slidev-layout:not(.center) > p:first-child + ol {
+  margin-top: 0;
 }
 
 h2 {
@@ -96,9 +125,9 @@ h3 {
 /* グラデーション見出し */
 .gradient-heading {
   background: linear-gradient(135deg,
-    oklch(0.58 0.2 250) 0%,
-    oklch(0.63 0.18 230) 50%,
-    oklch(0.68 0.16 215) 100%
+    oklch(0.48 0.18 250) 0%,
+    oklch(0.50 0.17 230) 50%,
+    oklch(0.52 0.16 215) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -133,27 +162,51 @@ h3 {
 /* テキストスタイル */
 p {
   color: var(--color-text);
-  line-height: 1.8;
-  margin-bottom: 1rem;
-  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  line-height: 1.7;
+  margin-bottom: 0.85rem;
+  font-size: var(--slide-body-font-size);
+  font-weight: 600;
 }
 
 /* Slidev デフォルトテーマの h1 + p { opacity: 50% } を上書き */
 .slidev-layout h1 + p {
   opacity: 1;
+  font-weight: 600;
 }
 
 /* リストスタイル */
 li {
   color: var(--color-text);
-  line-height: 1.8;
-  margin-bottom: 0.5rem;
-  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  line-height: 1.7;
+  margin-bottom: 0.4rem;
+  font-size: var(--slide-body-font-size);
+  font-weight: 600;
 }
 
 ul, ol {
   padding-left: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+  flex-shrink: 0;
+}
+
+.slidev-layout .slidev-code-wrapper,
+.slidev-layout pre:not(:has(.cover-slide)) {
+  flex-shrink: 1;
+  min-height: 0;
+  max-height: 58vh;
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+.slidev-layout .text-sm,
+.slidev-layout .text-sm p {
+  font-size: clamp(0.95rem, 1.85vw, 1.12rem) !important;
+  font-weight: 600 !important;
+  color: var(--color-text) !important;
+}
+
+.slidev-layout strong {
+  font-weight: 700;
 }
 
 /* 引用スタイル */
@@ -170,12 +223,14 @@ blockquote {
 
 /* コードブロック */
 code {
-  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
   font-size: 0.9em;
-  padding: 0.2em 0.4em;
+  padding: 0.16em 0.38em;
   border-radius: 4px;
-  background: oklch(0.3 0.06 220);
-  color: oklch(0.85 0.15 195);
+  background: oklch(0.94 0.035 230);
+  color: oklch(0.42 0.15 235);
 }
 
 .dark code {
@@ -187,18 +242,41 @@ pre code {
   padding: 0;
   background: transparent;
   color: inherit;
+  font-size: inherit;
 }
 
-/* Shiki コードブロックの背景調整 */
+/* Shiki コードブロックの背景・サイズ調整 */
+.shiki,
+.slidev-code,
+.slidev-code-wrapper pre,
+pre.shiki {
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace !important;
+  font-variant-ligatures: none !important;
+  font-feature-settings: "liga" 0, "calt" 0 !important;
+  font-size: var(--slide-code-font-size) !important;
+  line-height: 1.65 !important;
+}
+
 .shiki {
-  background: oklch(0.08 0.015 200) !important;
-  padding: 1.5rem !important;
+  background: #101418 !important;
+  padding: 1rem 1.25rem !important;
   border-radius: 8px !important;
-  box-shadow: 0 4px 6px -1px oklch(0 0 0 / 0.2);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2);
+  max-height: 58vh;
+  overflow: auto;
+}
+
+.shiki code,
+.slidev-code code,
+pre.shiki code,
+pre.shiki .line,
+pre.shiki .line span {
+  font-size: inherit !important;
+  line-height: inherit !important;
 }
 
 .dark .shiki {
-  background: oklch(0.06 0.015 200) !important;
+  background: #0d1117 !important;
 }
 
 /* Diff ブロックのカラーリング */
@@ -240,7 +318,7 @@ pre code .line span {
 /* シンタックスハイライトは setup/shiki.ts のカスタムテーマで制御 */
 
 .shiki .line-number {
-  color: #5f8787 !important;
+  color: #8b949e !important;
   opacity: 0.7;
 }
 
